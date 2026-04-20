@@ -1,0 +1,27 @@
+{
+  "name": "trabajo_practico",
+  "version": "1.0.0",
+  "description": "Trabajo Practico Curso \"Desarrollo de APIs con Node.JS\"",
+  "homepage": "https://github.com/mlunatti/trabajo_practico#readme",
+  "bugs": {
+    "url": "https://github.com/mlunatti/trabajo_practico/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlunatti/trabajo_practico.git"
+  },
+  "license": "ISC",
+  "author": "Lunatti Manuel Rodrigo",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "morgan": "^1.10.1",
+    "nodemon": "^3.1.14"
+  }
+}
