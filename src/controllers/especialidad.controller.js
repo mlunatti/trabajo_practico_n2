@@ -1,11 +1,18 @@
+const models = require('../database/models/index')
+
 module.exports ={
 
     listar: async (req,res) => {
         try {
             console.log('ejecutando Especialidad listar Todos')
 
+            const specialtys = await models.especialidad.findAll()
+
             res.json({
-                message:'Listado de todas las especialidades'
+                success:true,
+                data:{
+                    especialidades:specialty
+                }
             })
         } catch (error) {
             console.log(error)
@@ -16,8 +23,13 @@ module.exports ={
         try {
             console.log('ejecutando Especialidad Crear')
 
+            const specialty = await models.especialidad.create(req.body)
+
             res.json({
-                message:'Especialidad Creada: '+ req.body.especialidad
+                success:true,
+                data:{
+                    id: specialty.id
+                }
             })
         } catch (error) {
             console.log(error)
@@ -28,8 +40,13 @@ module.exports ={
         try {
             console.log('ejecutando Especialidad listarInfo')
 
+            const specialty = await models.especialidad.create(req.body)
+
             res.json({
-                message:'Informacion de Especialidad: ' +req.params.idEspecialidad
+                success:true,
+                data:{
+                    especialidad: specialty
+                }
             })
         } catch (error) {
             console.log(error)

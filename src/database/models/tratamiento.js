@@ -1,31 +1,21 @@
 'use strict' //Para que no se pueda usar variables no definidas
 
 module.exports = (sequelize,DataTypes)=>{
-    let Medico = sequelize.define('medico', {//Defino el modelo de la tabla medico
+    let Tratamiento = sequelize.define('tratamiento', {//Defino el modelo de la tabla medico
         id:{
           type:DataTypes.BIGINT, // tipo de dato
           autoIncrement:true, // autoincrementable  
           primaryKey:true, // clave primaria
           allowNull:false // no permite nulo
         },
-        dni: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-        },
-        nombre:{ // nombre de la columna
+        nombreTratamiento:{ // nombre de la columna
           type: DataTypes.STRING , // tipo de dato
           allowNull: false // no puede ser nulo
         },
-        apellido:{
-          type:DataTypes.STRING,
-          allowNull: false,  
-        },
-        email:{
-          type: DataTypes.STRING,  
-        },
-        edad:{
-          type: DataTypes.INTEGER,  
-        },
+        descripcionTratamiento:{ // nombre de la columna
+          type: DataTypes.STRING , // tipo de dato
+          allowNull: false // no puede ser nulo
+        },        
         createdAt:{ // fecha de creación
           type:DataTypes.DATE, // tipo de dato
           field: 'created_at', //nombre de la columna
@@ -47,15 +37,15 @@ module.exports = (sequelize,DataTypes)=>{
         freezeTableName: true, // no va a modificar el nombre de la tabla a plural
     })
 
-    Medico.associate = models =>{
+    Tratamiento.associate = models =>{
         // aca se relaciona las tablas de la base de datos
         //HasOne     A.hasOne(B) → cardinalidad (1,1), y la clave foránea está en B
         //BelongsTo  A.belongsTo(B) → cardinalidad (1,1), y la clave foránea está en A
         //HasMany    A.hasMany(B) → cardinalidad (1,N), y la clave foránea está en B
 
-        Medico.hasMany(models.paciente_medico) // Un médico tiene muchos pacientes
-        Medico.hasOne(models.especialidad)// Un médico tiene una especialidad
+        Tratamiento.hasOne(models.especialidad) // Un tratamiento es de una especialidad
+        Tratamiento.hasMany(models.paciente_tratamiento) // Un tratamiento es tomado por muchos pacientes
     }
 
-    return Medico
+    return Tratamiento
 }

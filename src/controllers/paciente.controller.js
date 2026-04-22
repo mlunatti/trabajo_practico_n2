@@ -1,11 +1,18 @@
+const models = require('../database/models/index')
+
 module.exports ={
 
     listar: async (req,res) => {
         try {
             console.log('ejecutando Paciente listar Todos')
 
+            const patients = await models.paciente.findAll()
+
             res.json({
-                message:'Listado de Todos los Pacientes'
+                success:true,
+                data:{
+                    pacientes:patients
+                }
             })
         } catch (error) {
             console.log(error)
@@ -16,8 +23,13 @@ module.exports ={
         try {
             console.log('ejecutando Paciente Crear')
 
+            const patient = await models.paciente.create(req.body)
+
             res.json({
-                message:'Paciente Creado: '+ req.body.paciente
+                success:true,
+                data:{
+                    id: patient.id
+                }
             })
         } catch (error) {
             console.log(error)
@@ -27,9 +39,14 @@ module.exports ={
     listarInfo: async (req,res) => {
         try {
             console.log('ejecutando Paciente listarInfo')
+            const patient = await models.paciente.create(req.body)
 
             res.json({
-                message:'Informacion de Paciente: ' +req.params.idPaciente            })
+                success:true,
+                data:{
+                    paciente: patient
+                }
+            })
         } catch (error) {
             console.log(error)
         }
