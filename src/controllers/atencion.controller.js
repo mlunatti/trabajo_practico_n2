@@ -4,9 +4,9 @@ module.exports  ={
 
     listar: async (req,res) => {
         try {
-            console.log('ejecutando Paciente listar Todos')
+            console.log('ejecutando Atención listar Todas')
 
-            const patients = await models.paciente.findAll(
+            const atentions = await models.atencion.findAll(
                     {include:{
                         model:models.paciente_medico,
                         include:[{
@@ -24,7 +24,7 @@ module.exports  ={
             res.json({
                 success:true,
                 data:{
-                    pacientes:patients
+                    pacientes:atentions
                 }
             })
         } catch (error) {
@@ -41,15 +41,15 @@ module.exports  ={
 
     crear: async (req,res) => {
         try {
-            console.log('ejecutando Paciente Crear')
+            console.log('ejecutando Atencion Crear')
 
             //Creamos transaccion            
             const result = await models.sequelize.transaction(async t => {
 
-                const patient = await models.paciente.create(req.body, { transaction: t },);
+                const atention = await models.atencion.create(req.body, { transaction: t },);
 
-                const relacion = await models.paciente_medico.create({
-                    pacienteId: patient.id,
+                const relacion = await models.diagnostico_especialidad_tratamiento.create({
+                    pacienteMedicoId: patient.id,
                     medicoId: req.body.medicoId
                 }, { transaction: t },);
 

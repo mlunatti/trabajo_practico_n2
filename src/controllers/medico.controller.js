@@ -5,7 +5,11 @@ module.exports ={
         try {
             console.log('ejecutando Medico listar Todos')
 
-            const doctors = await models.doctor.findAll()
+            const doctors = await models.medico.findAll({
+                 include:[{
+                            model: models.especialidad,
+                        }],    
+            })
 
             res.json({
                 success:true,
@@ -15,6 +19,13 @@ module.exports ={
             })
         } catch (error) {
             console.log(error)
+            res.json({
+                success:false,
+                data:{
+                    id: -1  ,
+                    message: error.parent.detail,  
+                    }
+            })            
         }
     },
 
@@ -22,7 +33,7 @@ module.exports ={
         try {
             console.log('ejecutando Medico Crear')
 
-            const doctor = await models.doctor.create(req.body)
+            const doctor = await models.medico.create(req.body)
 
             res.json({
                 success:true,
@@ -32,6 +43,13 @@ module.exports ={
             })
         } catch (error) {
             console.log(error)
+            res.json({
+                success:false,
+                data:{
+                    id: -1  ,
+                    message: error.parent.detail,  
+                    }
+            })            
         }
     },
 
@@ -39,7 +57,15 @@ module.exports ={
         try {
             console.log('ejecutando Medico listarInfo')
 
-            const doctor = await models.doctor.create(req.body)
+            const doctor = await models.medico.findOne({
+                where:{
+                    id:req.params.idMedico
+                },                   
+                 include:[{
+                            model: models.especialidad,
+                        }],    
+                
+            })            
 
             res.json({
                 success:true,
@@ -49,6 +75,13 @@ module.exports ={
             })
         } catch (error) {
             console.log(error)
+            res.json({
+                success:false,
+                data:{
+                    id: -1  ,
+                    message: error.parent.detail,  
+                    }
+            })
         }
     },
 

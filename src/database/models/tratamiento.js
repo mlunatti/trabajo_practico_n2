@@ -36,15 +36,14 @@ module.exports = (sequelize,DataTypes)=>{
         paranoid: true, //elimina los registros de forma logica
         freezeTableName: true, // no va a modificar el nombre de la tabla a plural
     })
-
+    
     Tratamiento.associate = models =>{
         // aca se relaciona las tablas de la base de datos
         //HasOne     A.hasOne(B) → cardinalidad (1,1), y la clave foránea está en B
         //BelongsTo  A.belongsTo(B) → cardinalidad (1,1), y la clave foránea está en A
         //HasMany    A.hasMany(B) → cardinalidad (1,N), y la clave foránea está en B
 
-        Tratamiento.hasOne(models.especialidad) // Un tratamiento es de una especialidad
-        Tratamiento.hasMany(models.paciente_tratamiento) // Un tratamiento es tomado por muchos pacientes
+        Tratamiento.hasMany(models.diagnostico_especialidad_tratamiento) // Un tratamiento es dado a muchos diagnosticos de especialidades
     }
 
     return Tratamiento

@@ -10,7 +10,8 @@ module.exports = (sequelize,DataTypes)=>{
         },
         dni: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: false,
+          unique: true,
         },
         nombre:{ // nombre de la columna
           type: DataTypes.STRING , // tipo de dato
@@ -58,7 +59,6 @@ module.exports = (sequelize,DataTypes)=>{
         //HasMany    A.hasMany(B) → cardinalidad (1,N), y la clave foránea está en B
 
         Paciente.hasMany(models.paciente_medico) // Un Paciente puede tener muchos médicos
-        Paciente.hasMany(models.paciente_tratamiento)// Un paciente puede tener muchos tratamientos
     }
 
     return Paciente

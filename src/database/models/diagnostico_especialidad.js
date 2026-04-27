@@ -1,7 +1,7 @@
 'use strict' //Para que no se pueda usar variables no definidas
 
 module.exports = (sequelize,DataTypes)=>{
-    let Paciente_Tratamiento = sequelize.define('paciente_tratamiento', {//Defino el modelo de la tabla medico
+    let Diagnostico_especialidad = sequelize.define('diagnostico_especialidad', {//Defino el modelo de la tabla medico
         id:{
           type:DataTypes.BIGINT, // tipo de dato
           autoIncrement:true, // autoincrementable  
@@ -29,15 +29,16 @@ module.exports = (sequelize,DataTypes)=>{
         freezeTableName: true, // no va a modificar el nombre de la tabla a plural
     })
 
-    Paciente_Tratamiento.associate = models =>{
+    Diagnostico_especialidad.associate = models =>{
         // aca se relaciona las tablas de la base de datos
         //HasOne     A.hasOne(B) → cardinalidad (1,1), y la clave foránea está en B
         //BelongsTo  A.belongsTo(B) → cardinalidad (1,1), y la clave foránea está en A
         //HasMany    A.hasMany(B) → cardinalidad (1,N), y la clave foránea está en B
 
-        Paciente_Tratamiento.belongsTo(models.paciente) 
-        Paciente_Tratamiento.belongsTo(models.tratamiento) 
+        Diagnostico_especialidad.belongsTo(models.diagnostico) 
+        Diagnostico_especialidad.belongsTo(models.especialidad) 
+        Diagnostico_especialidad.hasMany(models.diagnostico_especialidad_tratamiento) 
     }
 
-    return Paciente_Tratamiento
+    return Diagnostico_especialidad
 }

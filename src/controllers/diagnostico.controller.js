@@ -4,17 +4,13 @@ module.exports  ={
 
     listar: async (req,res) => {
         try {
-            console.log('ejecutando Paciente listar Todos')
+            console.log('ejecutando Diagnostico listar Todos')
 
-            const patients = await models.paciente.findAll(
+            const diagnostics = await models.diagnostico.findAll(
                     {include:{
-                        model:models.paciente_medico,
+                        model:models.diagnostico_especialidad,
                         include:[{
-                            model: models.medico,
-                            include:[{
-                            model: models.especialidad
-                            }],
-
+                            model: models.especialidad,
                         }],
                     }
             }
@@ -46,17 +42,17 @@ module.exports  ={
             //Creamos transaccion            
             const result = await models.sequelize.transaction(async t => {
 
-                const patient = await models.paciente.create(req.body, { transaction: t },);
+                const diagnostic = await models.diagnostico.create(req.body, { transaction: t },);
 
-                const relacion = await models.paciente_medico.create({
-                    pacienteId: patient.id,
-                    medicoId: req.body.medicoId
+                const relacion = await models.diagnostico_especialidad.create({
+                    diagnosticoId: diagnostic.id,
+                    especialidadId: req.body.especialidadId
                 }, { transaction: t },);
 
                 res.json({
                     success:true,
                     data:{
-                        id: patient.id,
+                        id: diagnostic.id,
                     }
                 })
 
@@ -75,19 +71,15 @@ module.exports  ={
 
     listarInfo: async (req,res,next) => {
         try {
-            console.log('ejecutando Paciente listarInfo')
-            const patient = await models.paciente.findOne({
+            console.log('ejecutando Diagnostico listarInfo')
+            const diagnostic = await models.diagnostico.findOne({
                 where:{
-                    id:req.params.idPaciente
+                    id:req.params.idDiagnostico
                 }, 
                 include:{
-                    model:models.paciente_medico,
+                    model:models.diagnostico_especialidad,
                     include:[{
-                        model: models.medico,
-                        include:[{
                         model: models.especialidad
-                        }],
-
                     }],
                 }
 

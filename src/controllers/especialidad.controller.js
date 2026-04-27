@@ -11,7 +11,7 @@ module.exports ={
             res.json({
                 success:true,
                 data:{
-                    especialidades:specialty
+                    especialidades:specialtys
                 }
             })
         } catch (error) {
@@ -33,14 +33,26 @@ module.exports ={
             })
         } catch (error) {
             console.log(error)
+            res.json({
+                success:false,
+                data:{
+                    id: -1  ,
+                    message: error.parent.detail,  
+                    }
+            })
+            return next(error)            
         }
     },
 
-    listarInfo: async (req,res) => {
+    listarInfo: async (req,res,next) => {
         try {
             console.log('ejecutando Especialidad listarInfo')
 
-            const specialty = await models.especialidad.create(req.body)
+            const specialty = await models.especialidad.findOne({
+                where:{
+                    id:req.params.idEspecialidad
+                }
+            })                        
 
             res.json({
                 success:true,
@@ -50,6 +62,14 @@ module.exports ={
             })
         } catch (error) {
             console.log(error)
+            res.json({
+                success:false,
+                data:{
+                    id: -1  ,
+                    message: error.parent.detail,  
+                    }
+            })
+            return next(error)            
         }
     },
 

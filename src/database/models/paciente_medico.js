@@ -37,6 +37,7 @@ module.exports = (sequelize,DataTypes)=>{
 
         Paciente_Medico.belongsTo(models.paciente) 
         Paciente_Medico.belongsTo(models.medico) 
+        Paciente_Medico.hasMany(models.atencion)
     }
 
     return Paciente_Medico

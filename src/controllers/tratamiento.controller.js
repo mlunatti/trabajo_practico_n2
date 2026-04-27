@@ -8,7 +8,22 @@ module.exports ={
         try {
             console.log('ejecutando Tratamiento listar todos')
 
-            const treatments = await models.tratamiento.findAll()
+            const treatments = await models.tratamiento.findAll(
+                    {include:{
+                        model:models.diagnostico_especialidad_tratamiento,
+                        include:[{
+                            model: models.diagnostico_especialidad,
+                            include:[{
+                                model: models.diagnostico_especialidad,
+                                include:[{
+                                    model: models.especialidad,model: models.diagnostico
+                                }],
+
+                            }],
+
+                        }],
+                    }
+            })
 
             res.json({
                 success:true,
@@ -23,16 +38,35 @@ module.exports ={
 
     crear: async (req,res) => {
         try {
-            const treatment = await models.tratamiento.create(req.body)
+            console.log('ejecutando Tratamiento Crear')
 
-            res.json({
-                success:true,
-                data:{
-                    id: treatment.id
-                }
-            })
+            //Creamos transaccion            
+            const result = await models.sequelize.transaction(async t => {
+
+                const treatment = await models.tratamiento.create(req.body, { transaction: t },);
+
+                const relacion = await models.diagnostico_especialidad_tratamiento.create({
+                    tratamientoId: treatment.id,
+                    diagnosticoEspecialidadId: req.body.IdDiagnosticoEspecialidad
+                }, { transaction: t },);
+
+                res.json({
+                    success:true,
+                    data:{
+                        id: treatment.id,
+                    }
+                })
+
+            });
         } catch (error) {
             console.log(error)
+            res.json({
+                success:false,
+                data:{
+                    id: -1  ,
+                    message: error.parent.detail,  
+                    }
+            })
         }
     },
 
@@ -42,7 +76,25 @@ module.exports ={
             const treatment = await models.tratamiento.findOne({
                 where:{
                     id:req.params.idTratamiento
-                }
+                },
+
+                include:{
+                        model:models.diagnostico_especialidad_tratamiento,
+                        include:[{
+                            model: models.diagnostico_especialidad,
+                            include:[{
+                                model: models.diagnostico_especialidad,
+                                include:[{
+                                    model: models.especialidad,model: models.diagnostico
+                                }],
+
+                            }],
+
+                        }],
+                    
+                } ,
+
+
             })
 
             res.json({
