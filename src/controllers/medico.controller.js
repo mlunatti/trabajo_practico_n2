@@ -8,7 +8,12 @@ module.exports ={
             const doctors = await models.medico.findAll({
                  include:[{
                             model: models.especialidad,
-                        }],    
+                        },{
+                            model:models.paciente_medico,
+                            include:[{
+                                model: models.paciente
+                            }]
+                        }]
             })
 
             res.json({
@@ -63,7 +68,13 @@ module.exports ={
                 },                   
                  include:[{
                             model: models.especialidad,
-                        }],    
+                        },{
+                            model:models.paciente_medico,
+                            include:[{
+                                model: models.paciente
+                            }]
+                        }
+                    ],    
                 
             })            
 
