@@ -10,7 +10,8 @@ module.exports = (sequelize,DataTypes)=>{
         },
         nombreDiagnostico:{ // nombre de la columna
           type: DataTypes.STRING , // tipo de dato
-          allowNull: false // no puede ser nulo
+          allowNull: false, // no puede ser nulo
+          unique: true
         },
         descripcionDiagnostico:{ // nombre de la columna
           type: DataTypes.STRING , // tipo de dato

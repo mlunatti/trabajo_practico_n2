@@ -20,7 +20,7 @@ module.exports  ={
             res.json({
                 success:true,
                 data:{
-                    pacientes:patients
+                    diagnosticos:diagnostics
                 }
             })
         } catch (error) {
@@ -88,7 +88,7 @@ module.exports  ={
             res.json({
                 success:true,
                 data:{
-                    paciente: patient
+                    diagnostico: diagnostic
                 }
             })
         } catch (error) {

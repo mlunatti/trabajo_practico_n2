@@ -8,7 +8,7 @@ module.exports = (sequelize,DataTypes)=>{
           primaryKey:true, // clave primaria
           allowNull:false // no permite nulo
         },
-        ObservacionAtencion:{ // nombre de la columna
+        observacionAtencion:{ // nombre de la columna
           type: DataTypes.STRING , // tipo de dato
           allowNull: false // no puede ser nulo
         },                
@@ -40,7 +40,7 @@ module.exports = (sequelize,DataTypes)=>{
         //HasMany    A.hasMany(B) → cardinalidad (1,N), y la clave foránea está en B
 
         Atencion.belongsTo(models.paciente_medico)  //Una Atención es entre un paciente médico
-        Atencion.belongsTo(models.diagnostico_especialidad_tratamiento) // una atención tiene un diagnostico y tratamiento de una especialidad
+        Atencion.belongsTo(models.de_tratamiento) // una atención tiene un diagnostico y tratamiento de una especialidad
     }
 
     return Atencion

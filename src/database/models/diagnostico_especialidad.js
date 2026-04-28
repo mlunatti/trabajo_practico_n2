@@ -37,7 +37,7 @@ module.exports = (sequelize,DataTypes)=>{
 
         Diagnostico_especialidad.belongsTo(models.diagnostico) 
         Diagnostico_especialidad.belongsTo(models.especialidad) 
-        Diagnostico_especialidad.hasMany(models.diagnostico_especialidad_tratamiento) 
+        Diagnostico_especialidad.hasMany(models.de_tratamiento) 
     }
 
     return Diagnostico_especialidad

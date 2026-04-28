@@ -9,20 +9,23 @@ module.exports ={
             console.log('ejecutando Tratamiento listar todos')
 
             const treatments = await models.tratamiento.findAll(
-                    {include:{
-                        model:models.diagnostico_especialidad_tratamiento,
+                    {                include:{
+                        model:models.de_tratamiento,
                         include:[{
                             model: models.diagnostico_especialidad,
                             include:[{
-                                model: models.diagnostico_especialidad,
-                                include:[{
-                                    model: models.especialidad,model: models.diagnostico
-                                }],
 
+                                    model: models.especialidad
+                            },{
+
+                                    model: models.diagnostico
                             }],
 
+
                         }],
-                    }
+                    
+                } ,
+
             })
 
             res.json({
@@ -33,6 +36,14 @@ module.exports ={
             })
         } catch (error) {
             console.log(error)
+            res.json({
+                success:false,
+                data:{
+                    id: -1  ,
+                    message: error.parent.detail,  
+                    }
+            })
+
         }
     },
 
@@ -44,11 +55,15 @@ module.exports ={
             const result = await models.sequelize.transaction(async t => {
 
                 const treatment = await models.tratamiento.create(req.body, { transaction: t },);
-
-                const relacion = await models.diagnostico_especialidad_tratamiento.create({
-                    tratamientoId: treatment.id,
-                    diagnosticoEspecialidadId: req.body.IdDiagnosticoEspecialidad
-                }, { transaction: t },);
+                
+                await Promise.all(
+                    req.body.IdDiagnosticoEspecialidad.map(element =>
+                        models.de_tratamiento.create({
+                            tratamientoId: treatment.id,
+                            diagnosticoEspecialidadId: element
+                        }, { transaction: t })
+                    )
+                );
 
                 res.json({
                     success:true,
@@ -79,16 +94,17 @@ module.exports ={
                 },
 
                 include:{
-                        model:models.diagnostico_especialidad_tratamiento,
+                        model:models.de_tratamiento,
                         include:[{
                             model: models.diagnostico_especialidad,
                             include:[{
-                                model: models.diagnostico_especialidad,
-                                include:[{
-                                    model: models.especialidad,model: models.diagnostico
-                                }],
 
+                                    model: models.especialidad
+                            },{
+
+                                    model: models.diagnostico
                             }],
+
 
                         }],
                     

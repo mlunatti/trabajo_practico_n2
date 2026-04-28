@@ -10,7 +10,8 @@ module.exports = (sequelize,DataTypes)=>{
         },
         nombreTratamiento:{ // nombre de la columna
           type: DataTypes.STRING , // tipo de dato
-          allowNull: false // no puede ser nulo
+          allowNull: false, // no puede ser nulo
+          unique: true,          
         },
         descripcionTratamiento:{ // nombre de la columna
           type: DataTypes.STRING , // tipo de dato
@@ -43,7 +44,7 @@ module.exports = (sequelize,DataTypes)=>{
         //BelongsTo  A.belongsTo(B) → cardinalidad (1,1), y la clave foránea está en A
         //HasMany    A.hasMany(B) → cardinalidad (1,N), y la clave foránea está en B
 
-        Tratamiento.hasMany(models.diagnostico_especialidad_tratamiento) // Un tratamiento es dado a muchos diagnosticos de especialidades
+        Tratamiento.hasMany(models.de_tratamiento) // Un tratamiento es dado a muchos diagnosticos de especialidades
     }
 
     return Tratamiento

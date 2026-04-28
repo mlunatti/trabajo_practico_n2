@@ -7,24 +7,51 @@ module.exports  ={
             console.log('ejecutando Atención listar Todas')
 
             const atentions = await models.atencion.findAll(
-                    {include:{
-                        model:models.paciente_medico,
-                        include:[{
-                            model: models.medico,
-                            include:[{
-                            model: models.especialidad
-                            }],
+                {
+                    include:[{   model:models.paciente_medico,
+                                include:[{
+                                                    model: models.medico,
+                                                    include:[{
+                                                    model: models.especialidad
+                                                    }],
 
-                        }],
+                                         },
+                                         {
+                                                  model: models.paciente,
+
+                                         }
+                    
+                                ],
+                    } ,{
+                                        model:models.de_tratamiento,
+                                        include:[{
+                                            model: models.diagnostico_especialidad,
+                                            include:{
+
+                                                    model: models.diagnostico
+                                            },
+
+
+                                        },{
+
+                                                    model: models.tratamiento
+                                           
+                                        }
+                                    
+                                    ]
+
+
+
                     }
-            }
 
-            )
+
+                ]
+         } )
 
             res.json({
                 success:true,
                 data:{
-                    pacientes:atentions
+                    atenciones:atentions
                 }
             })
         } catch (error) {
@@ -48,15 +75,15 @@ module.exports  ={
 
                 const atention = await models.atencion.create(req.body, { transaction: t },);
 
-                const relacion = await models.diagnostico_especialidad_tratamiento.create({
+/*                const relacion = await models.de_tratamiento.create({
                     pacienteMedicoId: patient.id,
-                    medicoId: req.body.medicoId
+                    deTratamientoId: req.body.medicoId
                 }, { transaction: t },);
-
+*/
                 res.json({
                     success:true,
                     data:{
-                        id: patient.id,
+                        id: atention.id,
                     }
                 })
 

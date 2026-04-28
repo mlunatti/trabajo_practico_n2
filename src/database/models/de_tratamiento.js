@@ -1,7 +1,8 @@
 'use strict' //Para que no se pueda usar variables no definidas
 
 module.exports = (sequelize,DataTypes)=>{
-    let Diagnostico_especialidad_tratamiento = sequelize.define('diagnostico_especialidad_tratamiento', {//Defino el modelo de la tabla medico
+    //let Diagnostico_especialidad_tratamiento = sequelize.define('diagnostico_especialidad_tratamiento', {//Defino el modelo de la tabla medico
+    let Diagnostico_especialidad_tratamiento = sequelize.define('de_tratamiento', {//Defino el modelo de la tabla medico
         id:{
           type:DataTypes.BIGINT, // tipo de dato
           autoIncrement:true, // autoincrementable  
