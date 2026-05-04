@@ -27,6 +27,10 @@ module.exports = (sequelize,DataTypes)=>{
         edad:{
           type: DataTypes.INTEGER,  
         },
+        profesion:{
+          type: DataTypes.STRING,   
+          allowNull:true
+        },        
         obraSocial: {
           type:DataTypes.STRING,
           allowNull:true

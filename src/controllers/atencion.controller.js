@@ -103,27 +103,55 @@ module.exports  ={
     listarInfo: async (req,res,next) => {
         try {
             console.log('ejecutando Paciente listarInfo')
-            const patient = await models.paciente.findOne({
+            const atention = await models.atencion.findOne({
                 where:{
-                    id:req.params.idPaciente
+                    id:req.params.idAtencion
                 }, 
-                include:{
-                    model:models.paciente_medico,
-                    include:[{
-                        model: models.medico,
-                        include:[{
-                        model: models.especialidad
-                        }],
+                                    include:[{   model:models.paciente_medico,
+                                include:[{
+                                                    model: models.medico,
+                                                    include:[{
+                                                    model: models.especialidad
+                                                    }],
 
-                    }],
-                }
+                                         },
+                                         {
+                                                  model: models.paciente,
+
+                                         }
+                    
+                                ],
+                    } ,{
+                                        model:models.de_tratamiento,
+                                        include:[{
+                                            model: models.diagnostico_especialidad,
+                                            include:{
+
+                                                    model: models.diagnostico
+                                            },
+
+
+                                        },{
+
+                                                    model: models.tratamiento
+                                           
+                                        }
+                                    
+                                    ]
+
+
+
+                    }
+
+
+                ]
 
             })                        
 
             res.json({
                 success:true,
                 data:{
-                    paciente: patient
+                    Atencion: atention
                 }
             })
         } catch (error) {

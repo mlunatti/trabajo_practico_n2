@@ -5,6 +5,8 @@ const cors = require('cors')
 const globalconstants  = require('./const/globalconstants')
 const routerConfig = require('./routes/index.routes')
 
+const errorHandler = require('./middlewares/error')
+
 const configuracionApi =(app) =>{
     app.use(express.json())
     app.use(express.urlencoded({extended:true}))
@@ -16,6 +18,8 @@ const configuracionApi =(app) =>{
 
 const configuracionRouter = (app) => {
   app.use('/api/', routerConfig.rutas_init())
+
+  app.use(errorHandler)
 };
 
 const configuracionHeaders =(app) =>{
