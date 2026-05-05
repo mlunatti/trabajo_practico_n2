@@ -22,6 +22,12 @@ module.exports = function(err,req,res,next){
 
     }
 
-    res.status(200).json(response)
+  
+  //Si el error es NotFound
+  if(err.message === 'Not Found'){
+        response.error.code = 404
+        response.error.message = 'Not Found'  
+  }
 
+   res.status(200).json(response)
 }

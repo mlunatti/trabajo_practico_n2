@@ -1,6 +1,6 @@
 //FUNCIONAMIENTO DE TODAS LAS RUTAS DE TRATAMIENTO
-
 const models = require('../database/models/index')
+const errors = require('../const/errors')
 
 module.exports ={
 
@@ -85,7 +85,7 @@ module.exports ={
         }
     },
 
-    listarInfo: async (req,res) => {
+    listarInfo: async (req,res,next) => {
         try {
             console.log('ejecutando Tratamiento listarInfo')
             const treatment = await models.tratamiento.findOne({
@@ -112,6 +112,8 @@ module.exports ={
 
 
             })
+
+            if(!treatment) return next(errors.TratamientoInexistente)
 
             res.json({
                 success:true,

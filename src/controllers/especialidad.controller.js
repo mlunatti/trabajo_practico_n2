@@ -1,4 +1,5 @@
 const models = require('../database/models/index')
+const errors = require('../const/errors')
 
 module.exports ={
 
@@ -53,8 +54,10 @@ module.exports ={
                     id:req.params.idEspecialidad
                 }
             })                        
-
-            res.json({
+            
+            if(!specialty) return next(errors.ExpecialidadInexistente)
+            
+                res.json({
                 success:true,
                 data:{
                     especialidad: specialty

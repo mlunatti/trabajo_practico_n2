@@ -1,6 +1,7 @@
 //FUNCIONAMIENTO DE TODAS LAS RUTAS DE USUARIO
 
 const models = require('../database/models/index')
+const errors = require('../const/errors')
 
 module.exports ={
     
@@ -39,7 +40,7 @@ module.exports ={
 
     },
 
-    listarInfo: async (req,res) => {
+    listarInfo: async (req,res, next) => {
         
         try {
             console.log('ejecutando listarInfo')
@@ -49,6 +50,8 @@ module.exports ={
                     id:req.params.idUsuario
                 }
             })
+
+            if(!user) return next(errors.UsuarioInexistente)
 
             res.json({
                 success:true,

@@ -1,4 +1,5 @@
 const models = require('../database/models/index')
+const errors = require('../const/errors')
 
 module.exports  ={
 
@@ -84,7 +85,8 @@ module.exports  ={
                 }
 
             })                        
-
+            
+            if(!diagnostic) return next(errors.DiagnosticoInexistente)
             res.json({
                 success:true,
                 data:{

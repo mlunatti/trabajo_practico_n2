@@ -1,4 +1,6 @@
 const models = require('../database/models/index')
+const errors = require('../const/errors')
+
 module.exports ={
 
     listar: async (req,res) => {
@@ -58,7 +60,7 @@ module.exports ={
         }
     },
 
-    listarInfo: async (req,res) => {
+    listarInfo: async (req,res,next) => {
         try {
             console.log('ejecutando Medico listarInfo')
 
@@ -77,6 +79,8 @@ module.exports ={
                     ],    
                 
             })            
+
+            if(!doctor) return next(errors.DoctorInexistente)
 
             res.json({
                 success:true,
